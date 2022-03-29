@@ -3,32 +3,33 @@ import styled from "styled-components";
 import "antd/dist/antd.css";
 import { Space, Card } from "antd";
 import { Checkbox, Button } from "antd";
+import { useTodoContext } from "../context/todoContext";
 
-export const Item = ({ text, id, deleteid, toggleCheck }) => {
-  const [check, setCheck] = useState(false);
+export const Item = ({ text, id, checked }) => {
+  const { deleteTodos, togggleChecks } = useTodoContext();
+
   return (
     <Wrapper>
       <Card className="crd">
         <div className="container">
-          {check ? (
-            <h4 style={{ textDecoration: "line-through" }}> {text}</h4>
-          ) : (
-            <h4> {text}</h4>
-          )}
+          <h4> {text}</h4>
           <div>
-            <Checkbox
+            {/* {checked? 
+            
+          } */}
+            {/* <Checkbox
               className="check"
+              value={check}
               onChange={(e) => {
                 e.preventDefault();
+                togggleChecks({ id, check });
                 setCheck(!check);
-                toggleCheck(id);
               }}
-            ></Checkbox>
+            ></Checkbox> */}
             <Button
               onClick={(e) => {
                 e.preventDefault();
-                console.log(id);
-                deleteid(id);
+                deleteTodos(id);
               }}
               type="primary"
               shape="round"

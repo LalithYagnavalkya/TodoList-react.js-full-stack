@@ -9,7 +9,8 @@ import { Button, Radio } from "antd";
 import { useTodoContext } from "./context/todoContext";
 
 function App() {
-  const { isLoading, todos, createTodos, deleteTodos } = useTodoContext();
+  const { isLoading, todos, createTodos, deleteTodos, togggleChecks } =
+    useTodoContext();
   const [items, setItems] = useState(todos);
   const [input, setInput] = useState("");
   if (isLoading) {
@@ -24,11 +25,6 @@ function App() {
     }
   };
 
-  const deleteItem = (id) => {
-    console.log(id);
-    deleteTodos(id);
-  };
-
   return (
     <div className="App">
       <br />
@@ -36,8 +32,9 @@ function App() {
       <Divider dashed />
 
       {todos.map((i, index) => {
+        console.log(i);
         return (
-          <Item key={index} id={i._id} text={i?.title} deleteid={deleteItem} />
+          <Item key={index} id={i._id} text={i?.title} checked={i.checked} />
         );
       })}
 

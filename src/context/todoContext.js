@@ -9,7 +9,7 @@ const initialState = {
   todos: [],
   newTodo: { title: "", checked: false },
   deleteId: "",
-  toggleCheck: false,
+  toggleCheck: { id: "", checked: false },
 };
 
 const TodoContext = React.createContext();
@@ -20,6 +20,7 @@ export const TodoProvider = ({ children }) => {
   const fetchTodos = async () => {
     try {
       const response = await getTodos();
+      console.log(response.data);
       dispatch({ type: "GET_ALL_TODOS", payload: response.data });
     } catch (err) {
       console.log("something went wrong");
@@ -35,13 +36,12 @@ export const TodoProvider = ({ children }) => {
     deleteTodo(id);
     dispatch({ type: "DELETE_TODO", payload: id });
   };
-  const togggleChecks = async (id) => {
-    togggleCheck(id);
-    dispatch({ type: "TOGGGLE_CHECK", payload: id });
+  const togggleChecks = async (todo) => {
+    togggleCheck(todo);
+    dispatch({ type: "TOGGGLE_CHECK", payload: todo.id });
   };
   useEffect(() => {
     fetchTodos();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.newTodo, state.deleteId, state.toggleCheck]);
   return (
     <TodoContext.Provider
