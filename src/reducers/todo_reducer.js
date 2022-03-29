@@ -11,6 +11,9 @@ const todos_reducer = (state, action) => {
   if (action.type === "DELETE_TODO") {
     return { ...state, deleteId: action.payload };
   }
+  if (action.type === "TOGGGLE_CHECK") {
+    return { ...state, toggleCheck: action.payload };
+  }
 };
 
 export default todos_reducer;

@@ -2,13 +2,14 @@ import axios from "axios";
 import React, { useContext, useEffect, useReducer, useState } from "react";
 
 import reducer from "../reducers/todo_reducer";
-import { getTodos, createTodo, deleteTodo } from "../api/todos";
+import { getTodos, createTodo, deleteTodo, togggleCheck } from "../api/todos";
 
 const initialState = {
   isLoading: true,
   todos: [],
   newTodo: { title: "", checked: false },
   deleteId: "",
+  toggleCheck: false,
 };
 
 const TodoContext = React.createContext();
@@ -34,12 +35,18 @@ export const TodoProvider = ({ children }) => {
     deleteTodo(id);
     dispatch({ type: "DELETE_TODO", payload: id });
   };
+  const togggleChecks = async (id) => {
+    togggleCheck(id);
+    dispatch({ type: "TOGGGLE_CHECK", payload: id });
+  };
   useEffect(() => {
     fetchTodos();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.newTodo, state.deleteId]);
+  }, [state.newTodo, state.deleteId, state.toggleCheck]);
   return (
-    <TodoContext.Provider value={{ ...state, createTodos, deleteTodos }}>
+    <TodoContext.Provider
+      value={{ ...state, createTodos, deleteTodos, togggleChecks }}
+    >
       {children}
     </TodoContext.Provider>
   );

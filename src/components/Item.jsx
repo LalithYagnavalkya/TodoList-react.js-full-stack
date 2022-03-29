@@ -1,20 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import "antd/dist/antd.css";
 import { Space, Card } from "antd";
 import { Checkbox, Button } from "antd";
 
-export const Item = ({ text, id, deleteid }) => {
+export const Item = ({ text, id, deleteid, toggleCheck }) => {
+  const [check, setCheck] = useState(false);
   return (
     <Wrapper>
       <Card className="crd">
         <div className="container">
-          <h4>{text}</h4>
+          {check ? (
+            <h4 style={{ textDecoration: "line-through" }}> {text}</h4>
+          ) : (
+            <h4> {text}</h4>
+          )}
           <div>
             <Checkbox
               className="check"
               onChange={(e) => {
-                e.target.checked = true;
+                e.preventDefault();
+                setCheck(!check);
+                toggleCheck(id);
               }}
             ></Checkbox>
             <Button

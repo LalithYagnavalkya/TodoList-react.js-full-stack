@@ -12,5 +12,9 @@ const deleteTodo = async (id) => {
   console.log(id);
   return await baseUrl.delete(`/delete/${id}`);
 };
+const togggleCheck = async (id) => {
+  console.log(id);
+  return await baseUrl.patch(`/togglecheck/${id}`);
+};
 
-export { getTodos, createTodo, deleteTodo };
+export { getTodos, createTodo, deleteTodo, togggleCheck };
