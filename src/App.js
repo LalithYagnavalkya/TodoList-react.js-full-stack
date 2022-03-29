@@ -5,26 +5,28 @@ import { Input } from "antd";
 import { Divider } from "antd";
 import { useState } from "react";
 import { Button, Radio } from "antd";
-import { DownloadOutlined } from "@ant-design/icons";
+// import { DownloadOutlined } from "@ant-design/icons";
+import { useTodoContext } from "./context/todoContext";
 
 function App() {
-  const [items, setItems] = useState(["Start your daily routine"]);
+  const { isLoading, todos, createTodos, deleteTodos } = useTodoContext();
+  const [items, setItems] = useState(todos);
   const [input, setInput] = useState("");
-
-  const deleteItem = (id) => {
-    setItems((prevItems) => {
-      return prevItems.filter((item, index) => index != id);
-    });
-  };
+  if (isLoading) {
+    return <h1>loading...</h1>;
+  }
 
   const updateItems = (e) => {
     e.preventDefault();
     if (input != "") {
-      setItems((prevItems) => {
-        return [...prevItems, input];
-      });
+      createTodos({ title: input, checked: false });
       setInput("");
     }
+  };
+
+  const deleteItem = (id) => {
+    console.log(id);
+    deleteTodos(id);
   };
 
   return (
@@ -33,9 +35,9 @@ function App() {
       <h1> Todo List</h1>
       <Divider dashed />
 
-      {items.map((i, index) => {
+      {todos.map((i, index) => {
         return (
-          <Item key={index} index={index} text={i} deleteid={deleteItem} />
+          <Item key={index} id={i._id} text={i?.title} deleteid={deleteItem} />
         );
       })}
 
@@ -43,6 +45,7 @@ function App() {
         <Wrapper>
           <Input
             name="item"
+            autoComplete="off"
             onChange={(e) => setInput(e.target.value)}
             value={input}
             placeholder="type here..."
@@ -53,6 +56,7 @@ function App() {
         </Wrapper>
       </form>
     </div>
+    // <h1>hello</h1>
   );
 }
 
