@@ -5,6 +5,8 @@ import { Input } from "antd";
 import { Divider } from "antd";
 import { useState } from "react";
 import { Button, Radio } from "antd";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 // import { DownloadOutlined } from "@ant-design/icons";
 import { useTodoContext } from "./context/todoContext";
 
@@ -14,7 +16,24 @@ function App() {
   const [items, setItems] = useState(todos);
   const [input, setInput] = useState("");
   if (isLoading) {
-    return <h1>loading...</h1>;
+    const antIcon = (
+      <LoadingOutlined style={{ fontSize: 120, color: "black" }} spin />
+    );
+
+    return (
+      <div
+        className="spinner"
+        style={{
+          minHeight: "100vh",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Spin indicator={antIcon} />
+      </div>
+    );
   }
 
   const updateItems = (e) => {
