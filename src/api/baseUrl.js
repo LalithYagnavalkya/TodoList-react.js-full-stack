@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const baseUrl = axios.create({
-  baseURL: "http://localhost:5000/api",
+  baseURL: "https://stormy-ravine-46879.herokuapp.com/api",
 });
 
 export default baseUrl;
